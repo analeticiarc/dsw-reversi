@@ -44,6 +44,7 @@ wss.on('connection', (ws: WebSocket) => {
   const playerColor = clients.length === 1 ? 'black' : 'white';
 
   console.log(`Jogador conectado: ${playerColor}`);
+  console.log('Total de jogadores:', clients.length);
 
   ws.send(JSON.stringify({ type: 'ASSIGNED', payload: { color: playerColor } }));
 
@@ -55,6 +56,7 @@ wss.on('connection', (ws: WebSocket) => {
 
       if (message.type === 'MOVE') {
         const { row, col } = message.payload;
+        console.log(`Tentando mover em: ${row}, ${col}`);
 
         const newState = applyMove(gameState, row, col);
 

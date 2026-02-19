@@ -39,7 +39,7 @@ function renderBoard(board, moves) {
   cells.forEach(cell => {
     const row = parseInt(cell.dataset.row);
     const col = parseInt(cell.dataset.col);
-    const value = board[row][col];
+    const value = board[row][col]; // null, 'black' ou 'white'
 
     cell.innerHTML = '';
     cell.classList.remove('valid-move');
@@ -51,6 +51,7 @@ function renderBoard(board, moves) {
       cell.appendChild(piece);
     }
 
+    // marca os movimentos validos
     const isValid = moves.some(([r, c]) => r === row && c === col);
     if (isValid) {
       cell.classList.add('valid-move');
@@ -90,6 +91,7 @@ ws.onmessage = (event) => {
 
   if (message.type === 'ASSIGNED') {
     myColor = message.payload.color;
+    console.log('Minha cor:', myColor);
     const colorText = myColor === 'black' ? 'Pretas ⚫' : 'Brancas ⚪';
     statusEl.textContent = `Você joga com: ${colorText}`;
   }
@@ -98,6 +100,7 @@ ws.onmessage = (event) => {
     const state = message.payload;
     currentPlayer = state.currentPlayer;
     validMoves = state.validMoves;
+    // console.log('Estado atualizado:', state);
     renderBoard(state.board, validMoves);
     renderStatus(state);
   }

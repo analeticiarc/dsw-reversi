@@ -25,8 +25,10 @@ export function createGame(): GameState {
   const board = createBoard();
 
   // posicao inicial do reversi
+  // pretas
   board[3][3] = 'black';
   board[4][4] = 'black';
+  // brancas
   board[3][4] = 'white';
   board[4][3] = 'white';
 
@@ -89,10 +91,15 @@ export function getValidMoves(board: Board, player: 'black' | 'white'): [number,
 function countPieces(board: Board): { blackCount: number; whiteCount: number } {
   let blackCount = 0;
   let whiteCount = 0;
+  // conta as pecas no tabuleiro
   for (const row of board) {
     for (const cell of row) {
-      if (cell === 'black') blackCount++;
-      if (cell === 'white') whiteCount++;
+      if (cell === 'black') {
+        blackCount++;
+      }
+      if (cell === 'white') {
+        whiteCount++;
+      }
     }
   }
   return { blackCount, whiteCount };
@@ -125,6 +132,7 @@ export function applyMove(state: GameState, row: number, col: number): GameState
   // fim de jogo se ninguem pode jogar
   if (!nextHasMoves && !currentHasMoves) {
     let winner: 'black' | 'white' | 'draw' | null = null;
+    // ve quem ganhou
     if (blackCount > whiteCount) winner = 'black';
     else if (whiteCount > blackCount) winner = 'white';
     else winner = 'draw';
