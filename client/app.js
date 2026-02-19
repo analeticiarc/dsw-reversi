@@ -1,8 +1,8 @@
 const ws = new WebSocket('ws://localhost:8080');
 
-let myColor = null;        // cor atribuída a este cliente
-let currentPlayer = null;  // de quem é a vez
-let validMoves = [];       // movimentos válidos destacados no tabuleiro
+let myColor = null;
+let currentPlayer = null;
+let validMoves = [];
 
 const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
@@ -10,7 +10,6 @@ const blackCountEl = document.getElementById('black-count');
 const whiteCountEl = document.getElementById('white-count');
 const restartBtn = document.getElementById('restart-btn');
 
-// Cria as 64 casas do tabuleiro na tela
 function createBoardCells() {
   boardEl.innerHTML = '';
   for (let row = 0; row < 8; row++) {
@@ -20,9 +19,7 @@ function createBoardCells() {
       cell.dataset.row = row;
       cell.dataset.col = col;
 
-      // Ao clicar em uma casa, envia a jogada para o servidor
       cell.addEventListener('click', () => {
-        // Só envia se for a vez do jogador
         if (myColor !== currentPlayer) return;
 
         ws.send(JSON.stringify({
@@ -36,7 +33,6 @@ function createBoardCells() {
   }
 }
 
-// Atualiza o tabuleiro visual com o estado recebido do servidor
 function renderBoard(board, moves) {
   const cells = boardEl.querySelectorAll('.cell');
 
@@ -45,11 +41,9 @@ function renderBoard(board, moves) {
     const col = parseInt(cell.dataset.col);
     const value = board[row][col];
 
-    // Limpa o conteúdo anterior
     cell.innerHTML = '';
     cell.classList.remove('valid-move');
 
-    // Coloca a peça se houver
     if (value === 'black' || value === 'white') {
       const piece = document.createElement('div');
       piece.classList.add('piece');
@@ -57,7 +51,6 @@ function renderBoard(board, moves) {
       cell.appendChild(piece);
     }
 
-    // Destaca os movimentos válidos para o jogador da vez
     const isValid = moves.some(([r, c]) => r === row && c === col);
     if (isValid) {
       cell.classList.add('valid-move');
@@ -65,7 +58,6 @@ function renderBoard(board, moves) {
   });
 }
 
-// Atualiza o texto de status e placar
 function renderStatus(state) {
   blackCountEl.textContent = state.blackCount;
   whiteCountEl.textContent = state.whiteCount;
@@ -93,7 +85,6 @@ function renderStatus(state) {
   }
 }
 
-// Recebe mensagens do servidor
 ws.onmessage = (event) => {
   const message = JSON.parse(event.data);
 
@@ -125,7 +116,6 @@ ws.onclose = () => {
   statusEl.textContent = 'Desconectado do servidor.';
 };
 
-// Botão de reiniciar
 restartBtn.addEventListener('click', () => {
   ws.send(JSON.stringify({ type: 'RESTART' }));
 });
