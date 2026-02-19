@@ -1,0 +1,117 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #1a1a2e;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  gap: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: #e0e0e0;
+}
+
+/* Placar e status */
+#info {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-size: 1.1rem;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#status {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f0c040;
+  text-align: center;
+  min-width: 220px;
+}
+
+/* Tabuleiro */
+#board {
+  display: grid;
+  grid-template-columns: repeat(8, 70px);
+  grid-template-rows: repeat(8, 70px);
+  border: 3px solid #444;
+  background-color: #1b5e20;
+}
+
+/* Cada casa */
+.cell {
+  width: 70px;
+  height: 70px;
+  border: 1px solid #2e7d32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cell:hover {
+  background-color: #2e7d32;
+}
+
+/* Casa destacada como movimento válido */
+.cell.valid-move {
+  background-color: #33691e;
+  cursor: pointer;
+}
+
+.cell.valid-move::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Peças */
+.piece {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.black-piece {
+  background-color: #111;
+  border: 2px solid #555;
+}
+
+.white-piece {
+  background-color: #f5f5f5;
+  border: 2px solid #aaa;
+}
+
+/* Botão */
+#restart-btn {
+  padding: 10px 30px;
+  font-size: 1rem;
+  background-color: #37474f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#restart-btn:hover {
+  background-color: #546e7a;
+}
